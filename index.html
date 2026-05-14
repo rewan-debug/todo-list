@@ -9,20 +9,35 @@
 
     body {
       font-family: Arial;
-      background-color: #f0f0f0;
+      background-color: #f5e6ff;
       text-align: center;
       margin-top: 50px;
     }
 
+    h1 {
+      color: purple;
+    }
+
     input {
-      width: 200px;
+      width: 220px;
       height: 35px;
       font-size: 16px;
+      border-radius: 8px;
+      border: none;
+      padding-left: 10px;
     }
 
     button {
       height: 40px;
-      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      padding: 0 10px;
+    }
+
+    .add-btn {
+      background-color: purple;
+      color: white;
     }
 
     ul {
@@ -34,8 +49,21 @@
       background: white;
       margin: 10px auto;
       padding: 10px;
-      width: 250px;
+      width: 300px;
       border-radius: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .done {
+      text-decoration: line-through;
+      color: gray;
+    }
+
+    .delete-btn {
+      background-color: red;
+      color: white;
     }
 
   </style>
@@ -48,7 +76,7 @@
 
   <input type="text" id="taskInput" placeholder="Write a task">
 
-  <button onclick="addTask()">Add</button>
+  <button class="add-btn" onclick="addTask()">Add</button>
 
   <ul id="taskList"></ul>
 
@@ -58,9 +86,29 @@
 
       let taskText = document.getElementById("taskInput").value;
 
+      if(taskText === "") {
+        return;
+      }
+
       let li = document.createElement("li");
 
-      li.innerText = taskText;
+      let span = document.createElement("span");
+      span.innerText = taskText;
+
+      span.onclick = function() {
+        span.classList.toggle("done");
+      };
+
+      let deleteBtn = document.createElement("button");
+      deleteBtn.innerText = "Delete";
+      deleteBtn.className = "delete-btn";
+
+      deleteBtn.onclick = function() {
+        li.remove();
+      };
+
+      li.appendChild(span);
+      li.appendChild(deleteBtn);
 
       document.getElementById("taskList").appendChild(li);
 

@@ -1,123 +1,76 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-
   <title>To Do List</title>
 
   <style>
-
-    body {
+    body{
       font-family: Arial;
-      background-color: #f5e6ff;
+      background: linear-gradient(to right, #d9a7ff, #fffcdc);
       text-align: center;
       margin-top: 50px;
     }
 
-    h1 {
+    .box{
+      background: white;
+      width: 350px;
+      margin: auto;
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0 0 10px gray;
+    }
+
+    h1{
       color: purple;
     }
 
-    input {
-      width: 220px;
-      height: 35px;
-      font-size: 16px;
-      border-radius: 8px;
-      border: none;
-      padding-left: 10px;
+    input{
+      padding: 10px;
+      width: 70%;
+      border-radius: 10px;
+      border: 1px solid gray;
     }
 
-    button {
-      height: 40px;
+    button{
+      padding: 10px;
       border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      padding: 0 10px;
-    }
-
-    .add-btn {
+      border-radius: 10px;
       background-color: purple;
       color: white;
+      cursor: pointer;
     }
 
-    ul {
-      list-style: none;
-      padding: 0;
+    li{
+      text-align: left;
+      margin-top: 10px;
+      font-size: 18px;
     }
-
-    li {
-      background: white;
-      margin: 10px auto;
-      padding: 10px;
-      width: 300px;
-      border-radius: 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .done {
-      text-decoration: line-through;
-      color: gray;
-    }
-
-    .delete-btn {
-      background-color: red;
-      color: white;
-    }
-
   </style>
-
 </head>
 
 <body>
 
-  <h1>My To Do List</h1>
+  <div class="box">
+    <h1>To Do List 📝</h1>
 
-  <input type="text" id="taskInput" placeholder="Write a task">
+    <input type="text" id="task">
+    <button onclick="addTask()">Add</button>
 
-  <button class="add-btn" onclick="addTask()">Add</button>
-
-  <ul id="taskList"></ul>
+    <ul id="list"></ul>
+  </div>
 
   <script>
-
-    function addTask() {
-
-      let taskText = document.getElementById("taskInput").value;
-
-      if(taskText === "") {
-        return;
-      }
+    function addTask(){
+      let task = document.getElementById("task").value;
 
       let li = document.createElement("li");
+      li.innerText = task;
 
-      let span = document.createElement("span");
-      span.innerText = taskText;
+      document.getElementById("list").appendChild(li);
 
-      span.onclick = function() {
-        span.classList.toggle("done");
-      };
-
-      let deleteBtn = document.createElement("button");
-      deleteBtn.innerText = "Delete";
-      deleteBtn.className = "delete-btn";
-
-      deleteBtn.onclick = function() {
-        li.remove();
-      };
-
-      li.appendChild(span);
-      li.appendChild(deleteBtn);
-
-      document.getElementById("taskList").appendChild(li);
-
-      document.getElementById("taskInput").value = "";
-
+      document.getElementById("task").value = "";
     }
-
   </script>
 
 </body>
-
 </html>

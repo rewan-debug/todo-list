@@ -1,62 +1,52 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-  <title>Advanced To Do List</title>
+  <meta charset="UTF-8">
+  <title>To Do List</title>
 
   <style>
+
     body {
       font-family: Arial;
-      background: linear-gradient(135deg, #8e2de2, #ff6fd8);
+      background: #f4d9ff;
       display: flex;
       justify-content: center;
-      align-items: center;
-      height: 100vh;
+      margin-top: 60px;
     }
 
-    .container {
+    .todo-box {
       background: white;
-      width: 450px;
-      padding: 25px;
+      width: 400px;
+      padding: 20px;
       border-radius: 20px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+      box-shadow: 0 0 15px gray;
     }
 
     h1 {
+      text-align: center;
       color: purple;
-      margin-bottom: 10px;
     }
 
-    .date {
-      color: gray;
-      margin-bottom: 20px;
-    }
-
-    .input-box {
+    .input-area {
       display: flex;
       gap: 10px;
     }
 
     input {
       flex: 1;
-      padding: 12px;
+      padding: 10px;
       border-radius: 10px;
-      border: 1px solid gray;
-      font-size: 16px;
+      border: 1px solid #ccc;
     }
 
-    .add-btn {
+    .add {
       background: purple;
       color: white;
       border: none;
-      padding: 12px 18px;
       border-radius: 10px;
+      padding: 10px 15px;
       cursor: pointer;
-      transition: 0.3s;
-    }
-
-    .add-btn:hover {
-      background: #6a0dad;
     }
 
     ul {
@@ -66,18 +56,13 @@
     }
 
     li {
-      background: #f5e9ff;
+      background: #f7edff;
       padding: 12px;
-      border-radius: 12px;
-      margin-top: 10px;
+      border-radius: 10px;
+      margin-bottom: 10px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      transition: 0.3s;
-    }
-
-    li:hover {
-      transform: scale(1.02);
     }
 
     .done {
@@ -85,13 +70,13 @@
       color: gray;
     }
 
-    .buttons button {
-      margin-left: 5px;
+    .btns button {
       border: none;
-      padding: 7px 10px;
+      padding: 6px 10px;
+      margin-left: 5px;
       border-radius: 8px;
-      cursor: pointer;
       color: white;
+      cursor: pointer;
     }
 
     .done-btn {
@@ -104,14 +89,9 @@
 
     .counter {
       margin-top: 15px;
-      font-weight: bold;
-      color: purple;
-    }
-
-    .empty {
       text-align: center;
-      color: gray;
-      margin-top: 20px;
+      color: purple;
+      font-weight: bold;
     }
 
   </style>
@@ -119,25 +99,20 @@
 
 <body>
 
-  <div class="container">
+  <div class="todo-box">
 
-    <h1>📝 My To Do List</h1>
+    <h1>📝 To Do List</h1>
 
-    <div class="date" id="date"></div>
-
-    <div class="input-box">
-      <input type="text" id="task" placeholder="Enter your task">
-      <button class="add-btn" onclick="addTask()">Add</button>
+    <div class="input-area">
+      <input type="text" id="taskInput" placeholder="Add a task">
+      <button class="add" onclick="addTask()">Add</button>
     </div>
+
+    <ul id="taskList"></ul>
 
     <div class="counter">
-      Tasks: <span id="count">0</span>
-    </div>
-
-    <ul id="list"></ul>
-
-    <div class="empty" id="emptyMsg">
-      No tasks yet
+      Total Tasks:
+      <span id="count">0</span>
     </div>
 
   </div>
@@ -146,42 +121,31 @@
 
     let count = 0;
 
-    document.getElementById("date").innerHTML =
-      new Date().toDateString();
-
-    document.getElementById("task")
-      .addEventListener("keypress", function(event) {
-
-      if (event.key === "Enter") {
-        addTask();
-      }
-
-    });
-
     function addTask() {
 
-      let taskInput = document.getElementById("task");
-      let task = taskInput.value;
+      let input = document.getElementById("taskInput");
+
+      let task = input.value;
 
       if (task === "") {
-        alert("Please enter a task");
+        alert("Write a task first");
         return;
       }
 
       let li = document.createElement("li");
 
-      let span = document.createElement("span");
-      span.innerText = task;
+      let text = document.createElement("span");
+      text.innerText = task;
 
-      let buttons = document.createElement("div");
-      buttons.className = "buttons";
+      let btns = document.createElement("div");
+      btns.className = "btns";
 
       let doneBtn = document.createElement("button");
       doneBtn.innerText = "Done";
       doneBtn.className = "done-btn";
 
       doneBtn.onclick = function () {
-        span.classList.toggle("done");
+        text.classList.toggle("done");
       };
 
       let deleteBtn = document.createElement("button");
@@ -191,35 +155,26 @@
       deleteBtn.onclick = function () {
         li.remove();
         count--;
-        updateCounter();
+        updateCount();
       };
 
-      buttons.appendChild(doneBtn);
-      buttons.appendChild(deleteBtn);
+      btns.appendChild(doneBtn);
+      btns.appendChild(deleteBtn);
 
-      li.appendChild(span);
-      li.appendChild(buttons);
+      li.appendChild(text);
+      li.appendChild(btns);
 
-      document.getElementById("list").appendChild(li);
+      document.getElementById("taskList").appendChild(li);
 
-      taskInput.value = "";
+      input.value = "";
 
       count++;
-      updateCounter();
+
+      updateCount();
     }
 
-    function updateCounter() {
-
+    function updateCount() {
       document.getElementById("count").innerText = count;
-
-      if (count == 0) {
-        document.getElementById("emptyMsg").style.display = "block";
-      }
-
-      else {
-        document.getElementById("emptyMsg").style.display = "none";
-      }
-
     }
 
   </script>

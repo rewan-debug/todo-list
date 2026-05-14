@@ -1,26 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-  <meta charset="UTF-8">
-  <title>To Do List</title>
+  <title>Super To Do List</title>
 
   <style>
 
     body {
       font-family: Arial;
-      background: #f4d9ff;
+      background: linear-gradient(to right, #7f00ff, #e100ff);
       display: flex;
       justify-content: center;
-      margin-top: 60px;
+      margin-top: 40px;
     }
 
-    .todo-box {
+    .box {
       background: white;
-      width: 400px;
+      width: 420px;
       padding: 20px;
       border-radius: 20px;
-      box-shadow: 0 0 15px gray;
+      box-shadow: 0 0 20px gray;
     }
 
     h1 {
@@ -28,7 +27,7 @@
       color: purple;
     }
 
-    .input-area {
+    .top {
       display: flex;
       gap: 10px;
     }
@@ -37,15 +36,15 @@
       flex: 1;
       padding: 10px;
       border-radius: 10px;
-      border: 1px solid #ccc;
+      border: 1px solid gray;
     }
 
-    .add {
+    .add-btn {
       background: purple;
       color: white;
       border: none;
       border-radius: 10px;
-      padding: 10px 15px;
+      padding: 10px;
       cursor: pointer;
     }
 
@@ -56,10 +55,10 @@
     }
 
     li {
-      background: #f7edff;
+      background: #f3e5ff;
+      margin-top: 10px;
       padding: 12px;
       border-radius: 10px;
-      margin-bottom: 10px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -70,10 +69,10 @@
       color: gray;
     }
 
-    .btns button {
+    .buttons button {
+      margin-left: 5px;
       border: none;
       padding: 6px 10px;
-      margin-left: 5px;
       border-radius: 8px;
       color: white;
       cursor: pointer;
@@ -87,11 +86,42 @@
       background: red;
     }
 
-    .counter {
+    .clear-btn {
+      width: 100%;
       margin-top: 15px;
+      background: black;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .counter {
       text-align: center;
+      margin-top: 15px;
       color: purple;
       font-weight: bold;
+    }
+
+    .dark-btn {
+      margin-bottom: 15px;
+      background: #222;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 10px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .dark-mode {
+      background: #222;
+      color: white;
+    }
+
+    .dark-mode li {
+      background: #444;
     }
 
   </style>
@@ -99,21 +129,37 @@
 
 <body>
 
-  <div class="todo-box">
+  <div class="box" id="box">
+
+    <button class="dark-btn" onclick="darkMode()">
+      🌙 Dark Mode
+    </button>
 
     <h1>📝 To Do List</h1>
 
-    <div class="input-area">
-      <input type="text" id="taskInput" placeholder="Add a task">
-      <button class="add" onclick="addTask()">Add</button>
+    <div class="top">
+
+      <input type="text" id="taskInput"
+      placeholder="Enter task">
+
+      <button class="add-btn"
+      onclick="addTask()">
+        Add
+      </button>
+
     </div>
 
     <ul id="taskList"></ul>
 
     <div class="counter">
-      Total Tasks:
+      Tasks:
       <span id="count">0</span>
     </div>
+
+    <button class="clear-btn"
+    onclick="clearTasks()">
+      Clear All
+    </button>
 
   </div>
 
@@ -123,12 +169,13 @@
 
     function addTask() {
 
-      let input = document.getElementById("taskInput");
+      let input =
+      document.getElementById("taskInput");
 
       let task = input.value;
 
       if (task === "") {
-        alert("Write a task first");
+        alert("Enter a task");
         return;
       }
 
@@ -137,10 +184,12 @@
       let text = document.createElement("span");
       text.innerText = task;
 
-      let btns = document.createElement("div");
-      btns.className = "btns";
+      let buttons = document.createElement("div");
+      buttons.className = "buttons";
 
-      let doneBtn = document.createElement("button");
+      let doneBtn =
+      document.createElement("button");
+
       doneBtn.innerText = "Done";
       doneBtn.className = "done-btn";
 
@@ -148,7 +197,9 @@
         text.classList.toggle("done");
       };
 
-      let deleteBtn = document.createElement("button");
+      let deleteBtn =
+      document.createElement("button");
+
       deleteBtn.innerText = "Delete";
       deleteBtn.className = "delete-btn";
 
@@ -158,13 +209,14 @@
         updateCount();
       };
 
-      btns.appendChild(doneBtn);
-      btns.appendChild(deleteBtn);
+      buttons.appendChild(doneBtn);
+      buttons.appendChild(deleteBtn);
 
       li.appendChild(text);
-      li.appendChild(btns);
+      li.appendChild(buttons);
 
-      document.getElementById("taskList").appendChild(li);
+      document.getElementById("taskList")
+      .appendChild(li);
 
       input.value = "";
 
@@ -174,7 +226,24 @@
     }
 
     function updateCount() {
-      document.getElementById("count").innerText = count;
+      document.getElementById("count")
+      .innerText = count;
+    }
+
+    function clearTasks() {
+
+      document.getElementById("taskList")
+      .innerHTML = "";
+
+      count = 0;
+
+      updateCount();
+    }
+
+    function darkMode() {
+
+      document.getElementById("box")
+      .classList.toggle("dark-mode");
     }
 
   </script>

@@ -1,253 +1,79 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-  <title>Super To Do List</title>
+<title>Todo</title>
 
-  <style>
+<style>
 
-    body {
-      font-family: Arial;
-      background: linear-gradient(to right, #7f00ff, #e100ff);
-      display: flex;
-      justify-content: center;
-      margin-top: 40px;
-    }
+body{
+font-family:Arial;
+background:linear-gradient(to right,purple,pink);
+display:flex;
+justify-content:center;
+margin-top:50px;
+}
 
-    .box {
-      background: white;
-      width: 420px;
-      padding: 20px;
-      border-radius: 20px;
-      box-shadow: 0 0 20px gray;
-    }
+.box{
+background:white;
+padding:20px;
+width:400px;
+border-radius:20px;
+}
 
-    h1 {
-      text-align: center;
-      color: purple;
-    }
+input{
+width:70%;
+padding:10px;
+}
 
-    .top {
-      display: flex;
-      gap: 10px;
-    }
+button{
+padding:10px;
+background:purple;
+color:white;
+border:none;
+}
 
-    input {
-      flex: 1;
-      padding: 10px;
-      border-radius: 10px;
-      border: 1px solid gray;
-    }
+li{
+margin-top:10px;
+background:#eee;
+padding:10px;
+border-radius:10px;
+}
 
-    .add-btn {
-      background: purple;
-      color: white;
-      border: none;
-      border-radius: 10px;
-      padding: 10px;
-      cursor: pointer;
-    }
+</style>
 
-    ul {
-      list-style: none;
-      padding: 0;
-      margin-top: 20px;
-    }
-
-    li {
-      background: #f3e5ff;
-      margin-top: 10px;
-      padding: 12px;
-      border-radius: 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .done {
-      text-decoration: line-through;
-      color: gray;
-    }
-
-    .buttons button {
-      margin-left: 5px;
-      border: none;
-      padding: 6px 10px;
-      border-radius: 8px;
-      color: white;
-      cursor: pointer;
-    }
-
-    .done-btn {
-      background: green;
-    }
-
-    .delete-btn {
-      background: red;
-    }
-
-    .clear-btn {
-      width: 100%;
-      margin-top: 15px;
-      background: black;
-      color: white;
-      border: none;
-      padding: 10px;
-      border-radius: 10px;
-      cursor: pointer;
-    }
-
-    .counter {
-      text-align: center;
-      margin-top: 15px;
-      color: purple;
-      font-weight: bold;
-    }
-
-    .dark-btn {
-      margin-bottom: 15px;
-      background: #222;
-      color: white;
-      border: none;
-      padding: 10px;
-      border-radius: 10px;
-      cursor: pointer;
-      width: 100%;
-    }
-
-    .dark-mode {
-      background: #222;
-      color: white;
-    }
-
-    .dark-mode li {
-      background: #444;
-    }
-
-  </style>
 </head>
 
 <body>
 
-  <div class="box" id="box">
+<div class="box">
 
-    <button class="dark-btn" onclick="darkMode()">
-      🌙 Dark Mode
-    </button>
+<h1>📝 To Do List</h1>
 
-    <h1>📝 To Do List</h1>
+<input id="task">
+<button onclick="addTask()">Add</button>
 
-    <div class="top">
+<ul id="list"></ul>
 
-      <input type="text" id="taskInput"
-      placeholder="Enter task">
+</div>
 
-      <button class="add-btn"
-      onclick="addTask()">
-        Add
-      </button>
+<script>
 
-    </div>
+function addTask(){
 
-    <ul id="taskList"></ul>
+let task =
+document.getElementById("task").value;
 
-    <div class="counter">
-      Tasks:
-      <span id="count">0</span>
-    </div>
+let li =
+document.createElement("li");
 
-    <button class="clear-btn"
-    onclick="clearTasks()">
-      Clear All
-    </button>
+li.innerText = task;
 
-  </div>
+document.getElementById("list")
+.appendChild(li);
 
-  <script>
+}
 
-    let count = 0;
-
-    function addTask() {
-
-      let input =
-      document.getElementById("taskInput");
-
-      let task = input.value;
-
-      if (task === "") {
-        alert("Enter a task");
-        return;
-      }
-
-      let li = document.createElement("li");
-
-      let text = document.createElement("span");
-      text.innerText = task;
-
-      let buttons = document.createElement("div");
-      buttons.className = "buttons";
-
-      let doneBtn =
-      document.createElement("button");
-
-      doneBtn.innerText = "Done";
-      doneBtn.className = "done-btn";
-
-      doneBtn.onclick = function () {
-        text.classList.toggle("done");
-      };
-
-      let deleteBtn =
-      document.createElement("button");
-
-      deleteBtn.innerText = "Delete";
-      deleteBtn.className = "delete-btn";
-
-      deleteBtn.onclick = function () {
-        li.remove();
-        count--;
-        updateCount();
-      };
-
-      buttons.appendChild(doneBtn);
-      buttons.appendChild(deleteBtn);
-
-      li.appendChild(text);
-      li.appendChild(buttons);
-
-      document.getElementById("taskList")
-      .appendChild(li);
-
-      input.value = "";
-
-      count++;
-
-      updateCount();
-    }
-
-    function updateCount() {
-      document.getElementById("count")
-      .innerText = count;
-    }
-
-    function clearTasks() {
-
-      document.getElementById("taskList")
-      .innerHTML = "";
-
-      count = 0;
-
-      updateCount();
-    }
-
-    function darkMode() {
-
-      document.getElementById("box")
-      .classList.toggle("dark-mode");
-    }
-
-  </script>
+</script>
 
 </body>
-
 </html>

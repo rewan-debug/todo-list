@@ -1,58 +1,173 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<title>Todo</title>
+  <title>Ultimate To Do List</title>
 
-<style>
+  <style>
 
-body{
-font-family:Arial;
-background:linear-gradient(to right,purple,pink);
-display:flex;
-justify-content:center;
-margin-top:50px;
-}
+    body{
+      font-family:Arial;
+      background:linear-gradient(to right,#8e2de2,#ff6fd8);
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      height:100vh;
+      margin:0;
+    }
 
-.box{
-background:white;
-padding:20px;
-width:400px;
-border-radius:20px;
-}
+    .box{
+      background:white;
+      width:650px;
+      padding:30px;
+      border-radius:25px;
+      box-shadow:0 0 25px rgba(0,0,0,0.3);
+    }
 
-input{
-width:70%;
-padding:10px;
-}
+    h1{
+      text-align:center;
+      color:purple;
+      font-size:40px;
+    }
 
-button{
-padding:10px;
-background:purple;
-color:white;
-border:none;
-}
+    .top{
+      display:flex;
+      gap:10px;
+    }
 
-li{
-margin-top:10px;
-background:#eee;
-padding:10px;
-border-radius:10px;
-}
+    input{
+      flex:1;
+      padding:15px;
+      font-size:18px;
+      border-radius:15px;
+      border:1px solid gray;
+    }
 
-</style>
+    .add-btn{
+      background:purple;
+    }
 
+    button{
+      border:none;
+      color:white;
+      padding:12px 15px;
+      border-radius:12px;
+      cursor:pointer;
+      font-size:16px;
+    }
+
+    .buttons{
+      margin-top:20px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .clear-btn{
+      background:black;
+    }
+
+    .dark-btn{
+      background:#333;
+    }
+
+    .pink-btn{
+      background:hotpink;
+    }
+
+    .blue-btn{
+      background:dodgerblue;
+    }
+
+    .green-btn{
+      background:green;
+    }
+
+    ul{
+      list-style:none;
+      padding:0;
+      margin-top:20px;
+    }
+
+    li{
+      background:#f3e5ff;
+      padding:15px;
+      border-radius:15px;
+      margin-top:10px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      font-size:20px;
+    }
+
+    .done{
+      text-decoration:line-through;
+      color:gray;
+    }
+
+    .task-buttons button{
+      margin-left:5px;
+    }
+
+    .done-btn{
+      background:green;
+    }
+
+    .delete-btn{
+      background:red;
+    }
+
+  </style>
 </head>
 
 <body>
 
-<div class="box">
+<div class="box" id="box">
 
-<h1>📝 To Do List</h1>
+<h1>📝 Ultimate To Do List</h1>
 
-<input id="task">
-<button onclick="addTask()">Add</button>
+<div class="top">
 
-<ul id="list"></ul>
+<input type="text" id="taskInput"
+placeholder="Enter task">
+
+<button class="add-btn"
+onclick="addTask()">
+Add
+</button>
+
+</div>
+
+<div class="buttons">
+
+<button class="dark-btn"
+onclick="darkMode()">
+🌙 Dark
+</button>
+
+<button class="pink-btn"
+onclick="pinkMode()">
+💖 Pink
+</button>
+
+<button class="blue-btn"
+onclick="blueMode()">
+💙 Blue
+</button>
+
+<button class="green-btn"
+onclick="greenMode()">
+💚 Green
+</button>
+
+<button class="clear-btn"
+onclick="clearTasks()">
+🗑️ Clear All
+</button>
+
+</div>
+
+<ul id="taskList"></ul>
 
 </div>
 
@@ -60,20 +175,90 @@ border-radius:10px;
 
 function addTask(){
 
-let task =
-document.getElementById("task").value;
+let input =
+document.getElementById("taskInput");
+
+let task = input.value;
+
+if(task===""){
+alert("Enter task");
+return;
+}
 
 let li =
 document.createElement("li");
 
-li.innerText = task;
+let span =
+document.createElement("span");
 
-document.getElementById("list")
+span.innerText = task;
+
+let taskButtons =
+document.createElement("div");
+
+taskButtons.className =
+"task-buttons";
+
+let doneBtn =
+document.createElement("button");
+
+doneBtn.innerText = "Done";
+doneBtn.className = "done-btn";
+
+doneBtn.onclick = function(){
+span.classList.toggle("done");
+};
+
+let deleteBtn =
+document.createElement("button");
+
+deleteBtn.innerText = "Delete";
+deleteBtn.className = "delete-btn";
+
+deleteBtn.onclick = function(){
+li.remove();
+};
+
+taskButtons.appendChild(doneBtn);
+taskButtons.appendChild(deleteBtn);
+
+li.appendChild(span);
+li.appendChild(taskButtons);
+
+document.getElementById("taskList")
 .appendChild(li);
 
+input.value = "";
+
+}
+
+function clearTasks(){
+document.getElementById("taskList")
+.innerHTML="";
+}
+
+function darkMode(){
+document.body.style.background =
+"black";
+}
+
+function pinkMode(){
+document.body.style.background =
+"pink";
+}
+
+function blueMode(){
+document.body.style.background =
+"lightblue";
+}
+
+function greenMode(){
+document.body.style.background =
+"lightgreen";
 }
 
 </script>
 
 </body>
+
 </html>
